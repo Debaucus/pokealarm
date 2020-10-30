@@ -129,6 +129,10 @@ class MonFilter(BaseFilter):
             eval_func=lambda d, v: not operator.contains(d, v),
             limit=BaseFilter.parse_as_set(int, 'exclude_costumes', data))
 
+        # Shiny
+        self.shiny_wild_find = BaseFilter.parse_as_type(
+            bool, 'shiny_wild', data)
+
         # Quick Move
         self.quick_moves = self.evaluate_attribute(  # f.q_ms contains m.q_m
             event_attribute='quick_id', eval_func=operator.contains,
@@ -247,6 +251,9 @@ class MonFilter(BaseFilter):
         # Costume
         if self.forms is not None:
             settings['costumes'] = self.costumes
+        # Shiny
+        if self.shiny_wild is not None:
+            settings['shiny_wild'] = self.shiny_wild
 
         # Quick Move
         if self.quick_moves is not None:

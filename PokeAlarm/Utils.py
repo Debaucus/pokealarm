@@ -124,6 +124,18 @@ def get_team_id(team_name):
     return get_team_id.ids.get(name)
 
 
+# Returns if Pokemon is Shiny in Wild
+def get_shiny_wild(shiny_wild):
+    if not hasattr(get_shiny_wild, 'info'):
+        get_shiny_wild.info = {}
+        file_ = get_path('data/is_shiny.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_shiny_wild.info[int(id_)] = j[id_].get('found_wild')
+    return get_shiny_wild.info.get(shiny_wild, bool)
+
+
 # Returns the types of a move when requesting
 def get_move_type(move_id):
     if not hasattr(get_move_type, 'info'):
@@ -423,6 +435,7 @@ def get_ex_eligible_emoji(ex_eligible):
         1: '✉️',
     }.get(ex_eligible, '')
 
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GMAPS API UTILITIES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -542,14 +555,14 @@ def get_time_as_str(t, timezone=None):
     time = "%dm %ds" % (m, s) if h == 0 else "%dh %dm" % (h, m)
     # Disappear time in 12h format, eg "2:30:16 PM"
     time_12h = disappear_time.strftime("%I:%M:%S") \
-        + disappear_time.strftime("%p").lower()
+               + disappear_time.strftime("%p").lower()
     # Disappear time in 24h format including seconds, eg "14:30:16"
     time_24h = disappear_time.strftime("%H:%M:%S")
 
     # Get the same as above but without seconds
     time_no_sec = "%dm" % m if h == 0 else "%dh %dm" % (h, m)
     time_12h_no_sec = disappear_time.strftime("%I:%M") \
-        + disappear_time.strftime("%p").lower()
+                      + disappear_time.strftime("%p").lower()
     time_24h_no_sec = disappear_time.strftime("%H:%M")
 
     time_raw_hours = int(h)
@@ -557,8 +570,8 @@ def get_time_as_str(t, timezone=None):
     time_raw_seconds = int(s)
 
     return time, time_12h, time_24h, \
-        time_no_sec, time_12h_no_sec, time_24h_no_sec, \
-        time_raw_hours, time_raw_minutes, time_raw_seconds
+           time_no_sec, time_12h_no_sec, time_24h_no_sec, \
+           time_raw_hours, time_raw_minutes, time_raw_seconds
 
 
 # Return the time in seconds
