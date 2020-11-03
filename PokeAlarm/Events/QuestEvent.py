@@ -4,7 +4,7 @@ from datetime import datetime
 # Local Imports
 from PokeAlarm import Unknown
 from . import BaseEvent
-from PokeAlarm.Utils import get_gmaps_link, get_applemaps_link, \
+from PokeAlarm.Utils import get_gmaps_link, get_applemaps_link, get_shiny_research, get_shiny_research_emoji, \
     get_waze_link, get_dist_as_str, get_base_types, get_type_emoji
 from PokeAlarm.Utilities.QuestUtils import reward_string, get_item_id, \
     get_quest_image
@@ -63,6 +63,9 @@ class QuestEvent(BaseEvent):
         self.item_amount = self.reward_amount
         self.item_type = data.get('item_type')
         self.item_id = data.get('item_id', 0)
+
+        # Shiny Research
+        self.shiny_research_check = get_shiny_research(self.monster_id)
 
     def generate_dts(self, locale, timezone, units):
         """ Return a dict with all the DTS for this event. """
@@ -126,6 +129,10 @@ class QuestEvent(BaseEvent):
             'costume_id': self.monster_costume_id,
             'costume_id_2': "{:02d}".format(self.monster_costume_id),
             'costume_id_3': "{:03d}".format(self.monster_costume_id),
+            #Shiny Research
+            'shiny_research': self.shiny_research_check,
+            'shiny_research_emoji': get_shiny_research_emoji(self.shiny_research_check),
+
             'type1': type1,
             'type1_or_empty': Unknown.or_empty(type1),
             'type1_emoji': Unknown.or_empty(get_type_emoji(

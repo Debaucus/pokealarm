@@ -7,7 +7,7 @@ from urllib.parse import urlencode
 from PokeAlarm import Unknown
 from PokeAlarm.Utilities import MonUtils, PvpUtils
 from PokeAlarm.Utils import (
-    get_gmaps_link, get_move_type, get_move_damage, get_shiny_wild, get_move_dps,
+    get_gmaps_link, get_move_type, get_move_damage, get_shiny_wild, get_shiny_wild_emoji, get_move_dps,
     get_move_duration, get_move_energy, get_pokemon_size,
     get_applemaps_link, get_time_as_str, get_seconds_remaining,
     get_base_types, get_dist_as_str, get_weather_emoji,
@@ -132,7 +132,7 @@ class MonEvent(BaseEvent):
         # Costume
         self.costume_id = check_for_none(int, data.get('costume'), 0)
 
-        # Shiny
+        # Shiny Wild
         self.shiny_wild_check = get_shiny_wild(self.monster_id)
 
         # Rarity
@@ -330,8 +330,9 @@ class MonEvent(BaseEvent):
             'costume_id_2': "{:02d}".format(self.costume_id),
             'costume_id_3': "{:03d}".format(self.costume_id),
 
-            #Shiny
+            #Shiny Wild
             'shiny_wild': self.shiny_wild_check,
+            'shiny_wild_emoji': get_shiny_wild_emoji(self.shiny_wild_check),
 
             # Quick Move
             'quick_move': locale.get_move_name(self.quick_id),

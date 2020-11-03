@@ -5,7 +5,7 @@ from datetime import datetime
 from PokeAlarm import Unknown
 from PokeAlarm.Utilities import MonUtils
 from . import BaseEvent
-from PokeAlarm.Utils import get_gmaps_link, get_applemaps_link, \
+from PokeAlarm.Utils import get_gmaps_link, get_applemaps_link, get_shiny_raid, get_shiny_raid_emoji, \
     get_time_as_str, get_move_type, get_move_damage, get_move_dps, \
     get_move_duration, get_move_energy, get_seconds_remaining, \
     get_dist_as_str, get_pokemon_cp_range, is_weather_boosted, \
@@ -49,6 +49,9 @@ class RaidEvent(BaseEvent):
 
         # Costume
         self.costume_id = check_for_none(int, data.get('costume'), 0)
+
+        # Shiny Raid
+        self.shiny_raid_check = get_shiny_raid(self.mon_id)
 
         # Weather Info
         self.weather_id = check_for_none(
@@ -164,6 +167,10 @@ class RaidEvent(BaseEvent):
             'costume_id': self.costume_id,
             'costume_id_2': "{:02d}".format(self.costume_id),
             'costume_id_3': "{:03d}".format(self.costume_id),
+
+            #Shiny Raid
+            'shiny_raid': self.shiny_raid_check,
+            'shiny_raid_emoji': get_shiny_raid_emoji(self.shiny_raid_check),
 
             # Location
             'lat': self.lat,

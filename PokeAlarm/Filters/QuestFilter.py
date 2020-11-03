@@ -88,6 +88,10 @@ class QuestFilter(BaseFilter):
             event_attribute='monster_costume_id', eval_func=operator.contains,
             limit=BaseFilter.parse_as_set(int, 'costume_ids', data))
 
+        # Shiny Research
+        self.shiny_research_find = BaseFilter.parse_as_type(
+            bool, 'shiny_research', data)
+
         # Item Rewards
         self.item_ids = self.evaluate_attribute(
             event_attribute='item_id', eval_func=operator.contains,
@@ -154,6 +158,10 @@ class QuestFilter(BaseFilter):
             settings['forms'] = self.forms
         if self.costumes is not None:
             settings['costumes'] = self.costumes
+
+        # Shiny Research
+        if self.shiny_research is not None:
+            settings['shiny_research'] = self.shiny_research
 
         # Item Rewards
         if self.item_ids is not None:

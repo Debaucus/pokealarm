@@ -135,6 +135,27 @@ def get_shiny_wild(shiny_wild):
             get_shiny_wild.info[int(id_)] = j[id_].get('found_wild')
     return get_shiny_wild.info.get(shiny_wild, bool)
 
+# Returns if Pokemon is Shiny in Raid
+def get_shiny_raid(shiny_raid):
+    if not hasattr(get_shiny_raid, 'info'):
+        get_shiny_raid.info = {}
+        file_ = get_path('data/is_shiny.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_shiny_raid.info[int(id_)] = j[id_].get('found_raid')
+    return get_shiny_raid.info.get(shiny_raid, bool)
+
+# Returns if Pokemon is Shiny in Research
+def get_shiny_research(shiny_research):
+    if not hasattr(get_shiny_research, 'info'):
+        get_shiny_research.info = {}
+        file_ = get_path('data/is_shiny.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_shiny_research.info[int(id_)] = j[id_].get('found_research')
+    return get_shiny_research.info.get(shiny_research, bool)
 
 # Returns the types of a move when requesting
 def get_move_type(move_id):
@@ -435,7 +456,23 @@ def get_ex_eligible_emoji(ex_eligible):
         1: '✉️',
     }.get(ex_eligible, '')
 
+def get_shiny_wild_emoji(shiny_wild):
+    return {
+        0: '',
+        1: '<:shiny:727868823298113558> ',
+    }.get(shiny_wild, '')
 
+def get_shiny_raid_emoji(shiny_raid):
+    return {
+        0: '',
+        1: '<:shiny:727868823298113558> ',
+    }.get(shiny_raid, '')
+
+def get_shiny_research_emoji(shiny_research):
+    return {
+        0: '',
+        1: '<:shiny:727868823298113558> ',
+    }.get(shiny_research, '')
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GMAPS API UTILITIES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -555,14 +592,14 @@ def get_time_as_str(t, timezone=None):
     time = "%dm %ds" % (m, s) if h == 0 else "%dh %dm" % (h, m)
     # Disappear time in 12h format, eg "2:30:16 PM"
     time_12h = disappear_time.strftime("%I:%M:%S") \
-               + disappear_time.strftime("%p").lower()
+        + disappear_time.strftime("%p").lower()
     # Disappear time in 24h format including seconds, eg "14:30:16"
     time_24h = disappear_time.strftime("%H:%M:%S")
 
     # Get the same as above but without seconds
     time_no_sec = "%dm" % m if h == 0 else "%dh %dm" % (h, m)
     time_12h_no_sec = disappear_time.strftime("%I:%M") \
-                      + disappear_time.strftime("%p").lower()
+        + disappear_time.strftime("%p").lower()
     time_24h_no_sec = disappear_time.strftime("%H:%M")
 
     time_raw_hours = int(h)

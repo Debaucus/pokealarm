@@ -159,3 +159,25 @@ def get_shiny_wild(shiny_wild_check):
         for id_ in j:
             get_shiny_wild.info[int(id_)] = j[id_].get('found_wild')
     return get_shiny_wild.info.get(shiny_wild_check)
+
+# Returns if Pokemon is Shiny in Raid
+def get_shiny_raid(shiny_raid_check):
+    if not hasattr(get_shiny_raid, 'info'):
+        get_shiny_raid.info = {}
+        file_ = get_path('data/is_shiny.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_shiny_raid.info[int(id_)] = j[id_].get('found_raid')
+    return get_shiny_raid.info.get(shiny_raid_check)
+
+# Returns if Pokemon is Shiny in Research
+def get_shiny_research(shiny_research_check):
+    if not hasattr(get_shiny_research, 'info'):
+        get_shiny_research.info = {}
+        file_ = get_path('data/is_shiny.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_shiny_research.info[int(id_)] = j[id_].get('found_research')
+    return get_shiny_research.info.get(shiny_research_check)

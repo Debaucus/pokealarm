@@ -74,6 +74,10 @@ class RaidFilter(BaseFilter):
             eval_func=lambda d, v: not operator.contains(d, v),
             limit=BaseFilter.parse_as_set(int, 'exclude_costumes', data))
 
+        # Shiny Raid
+        self.shiny_raid_find = BaseFilter.parse_as_type(
+            bool, 'shiny_raid', data)
+
         # Gender
         self.genders = self.evaluate_attribute(  # f.genders contains m.gender
             event_attribute='gender', eval_func=operator.contains,
@@ -177,6 +181,10 @@ class RaidFilter(BaseFilter):
         # Form
         if self.forms is not None:
             settings['forms'] = self.forms
+
+        # Shiny Raid
+        if self.shiny_raid is not None:
+            settings['shiny_raid'] = self.shiny_raid
 
         # Gender
         if self.genders is not None:
